@@ -13,9 +13,15 @@ import (
 func main() {
 
 	var url string
+	var upload string
 
 	flag.StringVar(&url, "url", "localhost:4040", "a string var")
+	flag.StringVar(&upload, "upload", "null", "a string var")
 	flag.Parse()
+
+
+
+
 
 	conn, err := grpc.Dial(url, grpc.WithInsecure())
 	if err != nil {
@@ -27,9 +33,20 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
-	var r *proto.AsciiResponse
+	//upload file
+	if upload != "null" {
 
-	r, err = client.DisplayAscii(ctx, &proto.AsciiRequest{})
+		_, err = client.UploadAscii(ctx,&proto.UploadRequest{Upload:upload})
+		if err != nil {
+			log.Fatalf("Could not upload: %v", err)
+		}
+
+	}
+
+	//display ascii
+	var r *proto.DisplayResponse
+
+	r, err = client.DisplayAscii(ctx, &proto.DisplayRequest{})
 	if err != nil {
 		log.Fatalf("Could not display: %v", err)
 	}

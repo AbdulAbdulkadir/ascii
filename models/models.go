@@ -77,7 +77,7 @@ func InsertAsciiArtDB(artArray []string) error {
 	return nil
 }
 
-func RetrieveAsciiArtArray() []*AsciiArt {
+func GetAsciiArtFromDB() ([]*AsciiArt, error) {
 	// Pass options to the Find method
 	findOptions := options.Find()
 
@@ -111,7 +111,7 @@ func RetrieveAsciiArtArray() []*AsciiArt {
 	// Close the cursor once finished
 	cur.Close(context.TODO())
 
-	return results
+	return results, nil
 }
 
 func CloseDB(client *mongo.Client) {
@@ -135,6 +135,7 @@ func GetAsciiArtFromFile() []string {
 	//storing them into a new array of strings
 	for _, file := range files {
 		//Take asciiArt from text file
+		//log.Println("Entering" + "AsciiArt/" + file.Name())
 		content, err := ioutil.ReadFile("AsciiArt/" + file.Name())
 		if err != nil {
 			log.Fatal(err)
@@ -144,6 +145,50 @@ func GetAsciiArtFromFile() []string {
 
 	return artArray
 }
+
+func UploadAsciiArt(pathToFile string) error{
+	log.Printf("made it in function upload")
+	content, err := ioutil.ReadFile(pathToFile)
+	if err != nil {
+		log.Printf("made it before return")
+		return err
+	}
+
+	log.Printf("content is " + string(content))
+	count, err := mongoClient.Database(DB).Collection(Collection).CountDocuments(context.TODO(),bson.M{},nil)
+	if err != nil {
+		return err
+	}
+
+	id := count
+
+	temp := AsciiArt{
+		Id:  int(id),
+		Art: string(content),
+	}
+
+	_, err = mongoClient.Database(DB).Collection(Collection).InsertOne(context.TODO(), temp)
+	if err != nil {
+		return err
+	}
+
+
+	/*
+
+	artArray := GetAsciiArtFromFile()
+
+	artArray = append(artArray, string(content))
+
+	err = InsertAsciiArtDB(artArray)
+	if err != nil {
+		return err
+	}
+*/
+
+	return nil
+}
+
+
 
 func SelectAsciiArt(sq int64, results []*AsciiArt) string {
 	var sp string

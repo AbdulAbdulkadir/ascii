@@ -11,13 +11,21 @@ message Response {
     int64 result = 1;
 }
 
-message AsciiRequest {
+message DisplayRequest {
 }
 
-message AsciiResponse {
+message DisplayResponse {
     string sp = 1;
 }
 
+message UploadRequest {
+    string upload = 1;
+}
+
+message UploadResponse {
+}
+
 service AddService {
-    rpc DisplayAscii(AsciiRequest) returns (AsciiResponse);
+    rpc DisplayAscii(DisplayRequest) returns (DisplayResponse);
+    rpc UploadAscii(UploadRequest) returns (UploadResponse);
 }

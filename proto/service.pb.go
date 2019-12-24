@@ -110,98 +110,173 @@ func (m *Response) GetResult() int64 {
 	return 0
 }
 
-type AsciiRequest struct {
+type DisplayRequest struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *AsciiRequest) Reset()         { *m = AsciiRequest{} }
-func (m *AsciiRequest) String() string { return proto.CompactTextString(m) }
-func (*AsciiRequest) ProtoMessage()    {}
-func (*AsciiRequest) Descriptor() ([]byte, []int) {
+func (m *DisplayRequest) Reset()         { *m = DisplayRequest{} }
+func (m *DisplayRequest) String() string { return proto.CompactTextString(m) }
+func (*DisplayRequest) ProtoMessage()    {}
+func (*DisplayRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_c33392ef2c1961ba, []int{2}
 }
 
-func (m *AsciiRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_AsciiRequest.Unmarshal(m, b)
+func (m *DisplayRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DisplayRequest.Unmarshal(m, b)
 }
-func (m *AsciiRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_AsciiRequest.Marshal(b, m, deterministic)
+func (m *DisplayRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DisplayRequest.Marshal(b, m, deterministic)
 }
-func (m *AsciiRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AsciiRequest.Merge(m, src)
+func (m *DisplayRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DisplayRequest.Merge(m, src)
 }
-func (m *AsciiRequest) XXX_Size() int {
-	return xxx_messageInfo_AsciiRequest.Size(m)
+func (m *DisplayRequest) XXX_Size() int {
+	return xxx_messageInfo_DisplayRequest.Size(m)
 }
-func (m *AsciiRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_AsciiRequest.DiscardUnknown(m)
+func (m *DisplayRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_DisplayRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_AsciiRequest proto.InternalMessageInfo
+var xxx_messageInfo_DisplayRequest proto.InternalMessageInfo
 
-type AsciiResponse struct {
+type DisplayResponse struct {
 	Sp                   string   `protobuf:"bytes,1,opt,name=sp,proto3" json:"sp,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *AsciiResponse) Reset()         { *m = AsciiResponse{} }
-func (m *AsciiResponse) String() string { return proto.CompactTextString(m) }
-func (*AsciiResponse) ProtoMessage()    {}
-func (*AsciiResponse) Descriptor() ([]byte, []int) {
+func (m *DisplayResponse) Reset()         { *m = DisplayResponse{} }
+func (m *DisplayResponse) String() string { return proto.CompactTextString(m) }
+func (*DisplayResponse) ProtoMessage()    {}
+func (*DisplayResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_c33392ef2c1961ba, []int{3}
 }
 
-func (m *AsciiResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_AsciiResponse.Unmarshal(m, b)
+func (m *DisplayResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DisplayResponse.Unmarshal(m, b)
 }
-func (m *AsciiResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_AsciiResponse.Marshal(b, m, deterministic)
+func (m *DisplayResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DisplayResponse.Marshal(b, m, deterministic)
 }
-func (m *AsciiResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AsciiResponse.Merge(m, src)
+func (m *DisplayResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DisplayResponse.Merge(m, src)
 }
-func (m *AsciiResponse) XXX_Size() int {
-	return xxx_messageInfo_AsciiResponse.Size(m)
+func (m *DisplayResponse) XXX_Size() int {
+	return xxx_messageInfo_DisplayResponse.Size(m)
 }
-func (m *AsciiResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_AsciiResponse.DiscardUnknown(m)
+func (m *DisplayResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_DisplayResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_AsciiResponse proto.InternalMessageInfo
+var xxx_messageInfo_DisplayResponse proto.InternalMessageInfo
 
-func (m *AsciiResponse) GetSp() string {
+func (m *DisplayResponse) GetSp() string {
 	if m != nil {
 		return m.Sp
 	}
 	return ""
 }
 
+type UploadRequest struct {
+	Upload               string   `protobuf:"bytes,1,opt,name=upload,proto3" json:"upload,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *UploadRequest) Reset()         { *m = UploadRequest{} }
+func (m *UploadRequest) String() string { return proto.CompactTextString(m) }
+func (*UploadRequest) ProtoMessage()    {}
+func (*UploadRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c33392ef2c1961ba, []int{4}
+}
+
+func (m *UploadRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UploadRequest.Unmarshal(m, b)
+}
+func (m *UploadRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UploadRequest.Marshal(b, m, deterministic)
+}
+func (m *UploadRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UploadRequest.Merge(m, src)
+}
+func (m *UploadRequest) XXX_Size() int {
+	return xxx_messageInfo_UploadRequest.Size(m)
+}
+func (m *UploadRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UploadRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UploadRequest proto.InternalMessageInfo
+
+func (m *UploadRequest) GetUpload() string {
+	if m != nil {
+		return m.Upload
+	}
+	return ""
+}
+
+type UploadResponse struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *UploadResponse) Reset()         { *m = UploadResponse{} }
+func (m *UploadResponse) String() string { return proto.CompactTextString(m) }
+func (*UploadResponse) ProtoMessage()    {}
+func (*UploadResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c33392ef2c1961ba, []int{5}
+}
+
+func (m *UploadResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UploadResponse.Unmarshal(m, b)
+}
+func (m *UploadResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UploadResponse.Marshal(b, m, deterministic)
+}
+func (m *UploadResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UploadResponse.Merge(m, src)
+}
+func (m *UploadResponse) XXX_Size() int {
+	return xxx_messageInfo_UploadResponse.Size(m)
+}
+func (m *UploadResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_UploadResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UploadResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*Request)(nil), "proto.Request")
 	proto.RegisterType((*Response)(nil), "proto.Response")
-	proto.RegisterType((*AsciiRequest)(nil), "proto.AsciiRequest")
-	proto.RegisterType((*AsciiResponse)(nil), "proto.AsciiResponse")
+	proto.RegisterType((*DisplayRequest)(nil), "proto.DisplayRequest")
+	proto.RegisterType((*DisplayResponse)(nil), "proto.DisplayResponse")
+	proto.RegisterType((*UploadRequest)(nil), "proto.UploadRequest")
+	proto.RegisterType((*UploadResponse)(nil), "proto.UploadResponse")
 }
 
 func init() { proto.RegisterFile("proto/service.proto", fileDescriptor_c33392ef2c1961ba) }
 
 var fileDescriptor_c33392ef2c1961ba = []byte{
-	// 176 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x2e, 0x28, 0xca, 0x2f,
-	0xc9, 0xd7, 0x2f, 0x4e, 0x2d, 0x2a, 0xcb, 0x4c, 0x4e, 0xd5, 0x03, 0xf3, 0x84, 0x58, 0xc1, 0x94,
-	0x92, 0x2a, 0x17, 0x7b, 0x50, 0x6a, 0x61, 0x69, 0x6a, 0x71, 0x89, 0x10, 0x0f, 0x17, 0x63, 0xa2,
-	0x04, 0xa3, 0x02, 0xa3, 0x06, 0x73, 0x10, 0x63, 0x22, 0x88, 0x97, 0x24, 0xc1, 0x04, 0xe1, 0x25,
-	0x29, 0x29, 0x71, 0x71, 0x04, 0xa5, 0x16, 0x17, 0xe4, 0xe7, 0x15, 0xa7, 0x0a, 0x89, 0x71, 0xb1,
-	0x15, 0xa5, 0x16, 0x97, 0xe6, 0x94, 0x40, 0x15, 0x43, 0x79, 0x4a, 0x7c, 0x5c, 0x3c, 0x8e, 0xc5,
-	0xc9, 0x99, 0x99, 0x50, 0xf3, 0x94, 0xe4, 0xb9, 0x78, 0xa1, 0x7c, 0xa8, 0x46, 0x3e, 0x2e, 0xa6,
-	0xe2, 0x02, 0xb0, 0x26, 0xce, 0x20, 0xa6, 0xe2, 0x02, 0x23, 0x77, 0x2e, 0x2e, 0xc7, 0x94, 0x94,
-	0x60, 0x88, 0xb3, 0x84, 0x2c, 0xb9, 0x78, 0x5c, 0x32, 0x8b, 0x0b, 0x72, 0x12, 0x2b, 0xc1, 0xba,
-	0x84, 0x84, 0x21, 0x0e, 0xd5, 0x43, 0x36, 0x53, 0x4a, 0x04, 0x55, 0x10, 0x62, 0x70, 0x12, 0x1b,
-	0x58, 0xd0, 0x18, 0x10, 0x00, 0x00, 0xff, 0xff, 0xc1, 0x0f, 0xbe, 0xd2, 0xe9, 0x00, 0x00, 0x00,
+	// 223 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x5c, 0x8f, 0xc1, 0x4a, 0xc4, 0x30,
+	0x18, 0x84, 0x49, 0xc5, 0xaa, 0xbf, 0xb5, 0x4a, 0xb4, 0xa5, 0xf4, 0xa4, 0x01, 0xd1, 0x53, 0x05,
+	0xbd, 0x09, 0x1e, 0x0a, 0x3e, 0x41, 0xc4, 0x07, 0x48, 0xdb, 0x1c, 0x02, 0xc5, 0xc4, 0xfe, 0xed,
+	0xc2, 0x3e, 0xc1, 0xbe, 0xf6, 0xd2, 0xe4, 0xef, 0x42, 0x7b, 0x0a, 0xf3, 0x31, 0x33, 0x99, 0x1f,
+	0xee, 0xdd, 0x60, 0x47, 0xfb, 0x86, 0x7a, 0xd8, 0x99, 0x56, 0x57, 0x5e, 0xf1, 0x73, 0xff, 0x88,
+	0x67, 0xb8, 0x90, 0xfa, 0x7f, 0xd2, 0x38, 0xf2, 0x04, 0x98, 0x2a, 0xd8, 0x23, 0x7b, 0x3d, 0x93,
+	0x4c, 0xcd, 0xaa, 0x29, 0xa2, 0xa0, 0x1a, 0x21, 0xe0, 0x52, 0x6a, 0x74, 0xf6, 0x0f, 0x35, 0xcf,
+	0x21, 0x1e, 0x34, 0x4e, 0xfd, 0x48, 0x66, 0x52, 0xe2, 0x0e, 0xd2, 0x6f, 0x83, 0xae, 0x57, 0x7b,
+	0x6a, 0x14, 0x4f, 0x70, 0x7b, 0x22, 0x14, 0x4e, 0x21, 0x42, 0xe7, 0x83, 0x57, 0x32, 0x42, 0x27,
+	0x5e, 0xe0, 0xe6, 0xd7, 0xf5, 0x56, 0x75, 0xcb, 0x8a, 0x1c, 0xe2, 0xc9, 0x03, 0x32, 0x91, 0x9a,
+	0xdb, 0x17, 0x63, 0xa8, 0x7a, 0x3f, 0x30, 0x80, 0xba, 0xeb, 0x7e, 0xc2, 0x59, 0xfc, 0x0b, 0x12,
+	0xfa, 0xac, 0xc6, 0xd6, 0x18, 0x9e, 0x85, 0x43, 0xab, 0xf5, 0xa6, 0x32, 0xdf, 0x62, 0x1a, 0xf6,
+	0x09, 0xd7, 0xa1, 0x3f, 0xa4, 0x1f, 0xc8, 0xb6, 0x1a, 0x57, 0x66, 0x1b, 0x1a, 0xb2, 0x4d, 0xec,
+	0xe9, 0xc7, 0x31, 0x00, 0x00, 0xff, 0xff, 0xd8, 0x08, 0xab, 0x37, 0x69, 0x01, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -216,7 +291,8 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type AddServiceClient interface {
-	DisplayAscii(ctx context.Context, in *AsciiRequest, opts ...grpc.CallOption) (*AsciiResponse, error)
+	DisplayAscii(ctx context.Context, in *DisplayRequest, opts ...grpc.CallOption) (*DisplayResponse, error)
+	UploadAscii(ctx context.Context, in *UploadRequest, opts ...grpc.CallOption) (*UploadResponse, error)
 }
 
 type addServiceClient struct {
@@ -227,9 +303,18 @@ func NewAddServiceClient(cc *grpc.ClientConn) AddServiceClient {
 	return &addServiceClient{cc}
 }
 
-func (c *addServiceClient) DisplayAscii(ctx context.Context, in *AsciiRequest, opts ...grpc.CallOption) (*AsciiResponse, error) {
-	out := new(AsciiResponse)
+func (c *addServiceClient) DisplayAscii(ctx context.Context, in *DisplayRequest, opts ...grpc.CallOption) (*DisplayResponse, error) {
+	out := new(DisplayResponse)
 	err := c.cc.Invoke(ctx, "/proto.AddService/DisplayAscii", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *addServiceClient) UploadAscii(ctx context.Context, in *UploadRequest, opts ...grpc.CallOption) (*UploadResponse, error) {
+	out := new(UploadResponse)
+	err := c.cc.Invoke(ctx, "/proto.AddService/UploadAscii", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -238,15 +323,19 @@ func (c *addServiceClient) DisplayAscii(ctx context.Context, in *AsciiRequest, o
 
 // AddServiceServer is the server API for AddService service.
 type AddServiceServer interface {
-	DisplayAscii(context.Context, *AsciiRequest) (*AsciiResponse, error)
+	DisplayAscii(context.Context, *DisplayRequest) (*DisplayResponse, error)
+	UploadAscii(context.Context, *UploadRequest) (*UploadResponse, error)
 }
 
 // UnimplementedAddServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedAddServiceServer struct {
 }
 
-func (*UnimplementedAddServiceServer) DisplayAscii(ctx context.Context, req *AsciiRequest) (*AsciiResponse, error) {
+func (*UnimplementedAddServiceServer) DisplayAscii(ctx context.Context, req *DisplayRequest) (*DisplayResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DisplayAscii not implemented")
+}
+func (*UnimplementedAddServiceServer) UploadAscii(ctx context.Context, req *UploadRequest) (*UploadResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadAscii not implemented")
 }
 
 func RegisterAddServiceServer(s *grpc.Server, srv AddServiceServer) {
@@ -254,7 +343,7 @@ func RegisterAddServiceServer(s *grpc.Server, srv AddServiceServer) {
 }
 
 func _AddService_DisplayAscii_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AsciiRequest)
+	in := new(DisplayRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -266,7 +355,25 @@ func _AddService_DisplayAscii_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: "/proto.AddService/DisplayAscii",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AddServiceServer).DisplayAscii(ctx, req.(*AsciiRequest))
+		return srv.(AddServiceServer).DisplayAscii(ctx, req.(*DisplayRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AddService_UploadAscii_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AddServiceServer).UploadAscii(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.AddService/UploadAscii",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AddServiceServer).UploadAscii(ctx, req.(*UploadRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -278,6 +385,10 @@ var _AddService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DisplayAscii",
 			Handler:    _AddService_DisplayAscii_Handler,
+		},
+		{
+			MethodName: "UploadAscii",
+			Handler:    _AddService_UploadAscii_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

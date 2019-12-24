@@ -2,8 +2,8 @@ package main
 
 import (
 	"context"
+	"github.com/AbdulAbdulkadir/ascii/models"
 	"github.com/AbdulAbdulkadir/ascii/proto"
-	"github.com/AbdulAbdulkadir/ascii/server/models"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"log"
@@ -37,9 +37,9 @@ func main() {
 
 
 
-func (s *server) DisplayAscii(_ context.Context, _ *proto.AsciiRequest) (*proto.AsciiResponse, error) {
+func (s *server) DisplayAscii(_ context.Context, _ *proto.DisplayRequest) (*proto.DisplayResponse, error) {
 
-	log.Printf("returning random ascii")
+	log.Printf("Returning random ascii")
 
 	//clearDB(*mongoClient)
 	//
@@ -52,15 +52,29 @@ func (s *server) DisplayAscii(_ context.Context, _ *proto.AsciiRequest) (*proto.
 	//	return nil, status.Error(codes.Internal, "internal server error - please try again later")
 	//}
 
-	asciiArray := models.RetrieveAsciiArtArray()
+	asciiArray, err := models.GetAsciiArtFromDB()
+	if err != nil {
+		log.Printf("Could not get ascii from database %+v", err)
+	}
 
 	//	return nil, status.Error(codes.AlreadyExists, "there is already an ascii called cat")
 
 	randIndex := int64(rand.Intn(len(asciiArray)))
 
-	selectIndex := models.SelectAsciiArt(randIndex, asciiArray)
+	result := models.SelectAsciiArt(randIndex, asciiArray)
 
-	return &proto.AsciiResponse{Sp: selectIndex}, nil
+	return &proto.DisplayResponse{Sp: result}, nil
 }
 
 
+func (s *server) UploadAscii(_ context.Context, request *proto.UploadRequest) (*proto.UploadResponse, error) {
+
+	log.Printf("Uploading ascii to server")
+
+	err := models.UploadAsciiArt(request.Upload)
+	if err != nil{
+		log.Printf("Could not get upload ascii to server: %+v", err)
+	}
+
+	return &proto.UploadResponse{}, nil
+}
