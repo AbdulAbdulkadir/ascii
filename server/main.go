@@ -2,12 +2,13 @@ package main
 
 import (
 	"context"
-	"github.com/AbdulAbdulkadir/ascii/models"
 	"github.com/AbdulAbdulkadir/ascii/proto"
+	"github.com/AbdulAbdulkadir/ascii/server/models"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/reflection"
+	"google.golang.org/grpc/status"
 	"log"
-	"math/rand"
 	"net"
 )
 
@@ -16,7 +17,17 @@ type server struct{}
 func main() {
 
 	models.StartMongoDB()
-	models.SeedDB()
+
+	isEmpty, err := models.IsDatabaseEmpty()
+	if err != nil {
+		log.Printf("Error checking if databse is empty")
+	}
+
+	if isEmpty{
+		models.SeedDB()
+		log.Printf("Database empty, will seed...")
+		log.Printf("Seeding complete!")
+	}
 
 	listener, err := net.Listen("tcp", ":4040")
 	if err != nil {
@@ -26,7 +37,7 @@ func main() {
 	//Create grpc server
 	srv := grpc.NewServer()
 	//Register server
-	proto.RegisterAddServiceServer(srv, &server{})
+	proto.RegisterAsciiServiceServer(srv, &server{})
 	//Serialize and Deserialize data
 	reflection.Register(srv)
 
@@ -35,46 +46,30 @@ func main() {
 	}
 }
 
-
-
 func (s *server) DisplayAscii(_ context.Context, _ *proto.DisplayRequest) (*proto.DisplayResponse, error) {
 
 	log.Printf("Returning random ascii")
 
-	//clearDB(*mongoClient)
-	//
-	//collection := mongoClient.Database("art").Collection("ascii")
-	//
-	//artArray := getAsciiArtFromFile()
-	//
-	//if err := insertAsciiArtDB(artArray, collection); err != nil {
-	//	log.Printf("unexpected database error %+v", err)
-	//	return nil, status.Error(codes.Internal, "internal server error - please try again later")
-	//}
-
-	asciiArray, err := models.GetAsciiArtFromDB()
+	result, err := models.GetRandomArt()
 	if err != nil {
-		log.Printf("Could not get ascii from database %+v", err)
+		return nil, status.Error(codes.Internal, "internal server error")
 	}
 
-	//	return nil, status.Error(codes.AlreadyExists, "there is already an ascii called cat")
-
-	randIndex := int64(rand.Intn(len(asciiArray)))
-
-	result := models.SelectAsciiArt(randIndex, asciiArray)
-
-	return &proto.DisplayResponse{Sp: result}, nil
+	return &proto.DisplayResponse{DisplayAscii: result.Art}, nil
 }
-
 
 func (s *server) UploadAscii(_ context.Context, request *proto.UploadRequest) (*proto.UploadResponse, error) {
 
-	log.Printf("Uploading ascii to server")
-
-	err := models.UploadAsciiArt(request.Upload)
-	if err != nil{
-		log.Printf("Could not get upload ascii to server: %+v", err)
+	if request.Content  == "" {
+		return nil,status.Error(codes.InvalidArgument, "Empty String")
 	}
 
+	err := models.UploadAsciiArt(request.Filename, request.Content)
+	if err != nil{
+		log.Printf("Could not upload ascii to server: %+v", err)
+		return nil, status.Error(codes.Internal, "internal server error")
+	}
+
+	log.Printf("Successfully uploaded file")
 	return &proto.UploadResponse{}, nil
 }
