@@ -58,7 +58,7 @@ func TestServer_UploadAscii(t *testing.T) {
 	t.Run("should run with string", func(t *testing.T) {
 		name := "dummyName"
 		str := "something"
-		_, err := client.UploadAscii(context.TODO(), &proto.UploadRequest{Filename:name,Content:str})
+		_, err := client.UploadAscii(context.TODO(), &proto.UploadRequest{Filename: name, Content: str})
 		if err != nil {
 			t.Fail()
 		}
@@ -67,7 +67,7 @@ func TestServer_UploadAscii(t *testing.T) {
 	t.Run("should fail with empty string", func(t *testing.T) {
 		name := "dummyName"
 		str := ""
-		_, err := client.UploadAscii(context.TODO(), &proto.UploadRequest{Filename:name,Content:str})
+		_, err := client.UploadAscii(context.TODO(), &proto.UploadRequest{Filename: name, Content: str})
 		if err == nil {
 			t.Fail()
 		}

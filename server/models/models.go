@@ -16,8 +16,8 @@ var (
 )
 
 type AsciiArt struct {
-	Name  string
-	Art string
+	Name string
+	Art  string
 }
 
 var mongoClient *mongo.Client
@@ -34,9 +34,8 @@ func ClearDB() {
 	mongoClient.Database(DB).Collection(Collection).Drop(context.TODO())
 }
 
-
 // Starts up the database
-func StartMongoDB() error{
+func StartMongoDB() error {
 
 	// Set client options
 	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
@@ -82,7 +81,7 @@ func SeedDB() error {
 // inserts them into the database
 func InsertAsciiArtDB(artArray []*AsciiArt) error {
 
-	if len(artArray) == 0{
+	if len(artArray) == 0 {
 		return errors.New("array is empty")
 	}
 
@@ -137,8 +136,8 @@ func GetAsciiArtFromFile() ([]*AsciiArt, error) {
 		}
 
 		temp := AsciiArt{
-			Name:  file.Name(),
-			Art: string(content),
+			Name: file.Name(),
+			Art:  string(content),
 		}
 
 		artArray = append(artArray, &temp)
@@ -151,8 +150,8 @@ func GetAsciiArtFromFile() ([]*AsciiArt, error) {
 func UploadAsciiArt(fileName string, content string) error {
 
 	temp := AsciiArt{
-		Name:  fileName,
-		Art: content,
+		Name: fileName,
+		Art:  content,
 	}
 
 	_, err := mongoClient.Database(DB).Collection(Collection).InsertOne(context.TODO(), temp)
@@ -162,7 +161,6 @@ func UploadAsciiArt(fileName string, content string) error {
 
 	return nil
 }
-
 
 // Checks to see if the Database is empty
 func IsDatabaseEmpty() (bool, error) {
@@ -190,4 +188,3 @@ func CloseDB() error {
 	fmt.Println("Connection to MongoDB closed.")
 	return nil
 }
-

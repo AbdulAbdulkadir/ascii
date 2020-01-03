@@ -23,7 +23,7 @@ func main() {
 		log.Printf("Error checking if databse is empty")
 	}
 
-	if isEmpty{
+	if isEmpty {
 		models.SeedDB()
 		log.Printf("Database empty, will seed...")
 		log.Printf("Seeding complete!")
@@ -60,12 +60,12 @@ func (s *server) DisplayAscii(_ context.Context, _ *proto.DisplayRequest) (*prot
 
 func (s *server) UploadAscii(_ context.Context, request *proto.UploadRequest) (*proto.UploadResponse, error) {
 
-	if request.Content  == "" {
-		return nil,status.Error(codes.InvalidArgument, "Empty String")
+	if request.Content == "" {
+		return nil, status.Error(codes.InvalidArgument, "Empty String")
 	}
 
 	err := models.UploadAsciiArt(request.Filename, request.Content)
-	if err != nil{
+	if err != nil {
 		log.Printf("Could not upload ascii to server: %+v", err)
 		return nil, status.Error(codes.Internal, "internal server error")
 	}

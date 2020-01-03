@@ -38,7 +38,7 @@ func main() {
 			log.Printf("could not read file")
 		}
 
-		_, err = client.UploadAscii(ctx,&proto.UploadRequest{Filename:fileName, Content:string(content)})
+		_, err = client.UploadAscii(ctx, &proto.UploadRequest{Filename: fileName, Content: string(content)})
 		if err != nil {
 			log.Fatalf("Could not upload: %v", err)
 		}
@@ -54,7 +54,7 @@ func main() {
 	}
 	if r.GetDisplayAscii() == "empty" {
 		fmt.Printf("Database is empty\n")
-	}else{
+	} else {
 		fmt.Printf("\n" + r.GetDisplayAscii())
 	}
 
