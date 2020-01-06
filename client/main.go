@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"github.com/AbdulAbdulkadir/ascii/proto"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	"io/ioutil"
 	"log"
 	"time"
@@ -17,7 +19,7 @@ func main() {
 	var fileName string
 
 	flag.StringVar(&url, "url", "localhost:4040", "a string var")
-	flag.StringVar(&fileName, "upload", "null", "a string var")
+	flag.StringVar(&fileName, "upload", "", "a string var")
 	flag.Parse()
 
 	conn, err := grpc.Dial(url, grpc.WithInsecure())
@@ -30,8 +32,8 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
-	//upload file
-	if fileName != "null" {
+	// Upload file
+	if fileName != "" {
 
 		content, err := ioutil.ReadFile(fileName)
 		if err != nil {
@@ -40,22 +42,29 @@ func main() {
 
 		_, err = client.UploadAscii(ctx, &proto.UploadRequest{Filename: fileName, Content: string(content)})
 		if err != nil {
-			log.Fatalf("Could not upload: %v", err)
+			if status.Convert(err).Code() == codes.InvalidArgument {
+				log.Printf("Empty string provided")
+			} else {
+				log.Printf("Server error")
+			}
+			return
 		}
 		log.Printf("Successfully uploaded " + fileName)
 	}
 
-	//display ascii
+	// Display ascii
 	var r *proto.DisplayResponse
 
 	r, err = client.DisplayAscii(ctx, &proto.DisplayRequest{})
 	if err != nil {
-		log.Fatalf("Could not display: %v", err)
+		if status.Convert(err).Code() == codes.FailedPrecondition {
+			log.Printf("Database is empty")
+		} else {
+			log.Printf("Server error")
+		}
+		return
 	}
-	if r.GetDisplayAscii() == "empty" {
-		fmt.Printf("Database is empty\n")
-	} else {
-		fmt.Printf("\n" + r.GetDisplayAscii())
-	}
+
+	fmt.Printf("\n" + r.GetDisplayAscii())
 
 }

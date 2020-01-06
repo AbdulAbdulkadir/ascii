@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"io/ioutil"
+	"log"
 )
 
 var (
@@ -26,7 +27,10 @@ var mongoClient *mongo.Client
 func StartTestDB() {
 	DB = "test"
 	Collection = "test"
-	StartMongoDB()
+	err := StartMongoDB()
+	if err != nil {
+		log.Println("could not start database")
+	}
 }
 
 // Clears database
@@ -52,7 +56,7 @@ func StartMongoDB() error {
 		return fmt.Errorf("could not ping client: %v", err)
 	}
 
-	fmt.Println("Connected to MongoDB!")
+	log.Println("Connected to MongoDB!")
 
 	mongoClient = client
 
@@ -62,7 +66,7 @@ func StartMongoDB() error {
 // Seeds the database with ascii art
 func SeedDB() error {
 
-	mongoClient.Database(DB).Collection(Collection).Drop(context.TODO())
+	ClearDB()
 
 	artArray, err := GetAsciiArtFromFile()
 	if err != nil {
@@ -77,7 +81,7 @@ func SeedDB() error {
 	return nil
 }
 
-// Takes in an array of ascii art (strings) as a parameter and
+// Takes in an array of ascii art as a parameter and
 // inserts them into the database
 func InsertAsciiArtDB(artArray []*AsciiArt) error {
 
@@ -119,7 +123,7 @@ func GetRandomArt() (*AsciiArt, error) {
 
 // Retrieves ascii art from file, stores them in a string array and returns it
 func GetAsciiArtFromFile() ([]*AsciiArt, error) {
-	//enters the AsciiArt directory
+	// Enters the AsciiArt directory
 	files, err := ioutil.ReadDir("AsciiArt")
 	if err != nil {
 		return nil, fmt.Errorf("could not enter directory: %v", err)
@@ -127,8 +131,8 @@ func GetAsciiArtFromFile() ([]*AsciiArt, error) {
 
 	var artArray []*AsciiArt
 
-	//Iterates through the array of text files and retrieves the data while
-	//storing them into a new array of strings
+	// Iterates through the array of text files and retrieves the data while
+	// storing them into a new array of strings
 	for _, file := range files {
 		content, err := ioutil.ReadFile("AsciiArt/" + file.Name())
 		if err != nil {
@@ -146,7 +150,7 @@ func GetAsciiArtFromFile() ([]*AsciiArt, error) {
 	return artArray, nil
 }
 
-//Uploads ascii art to the database
+// Uploads ascii art to the database
 func UploadAsciiArt(fileName string, content string) error {
 
 	temp := AsciiArt{
@@ -185,6 +189,6 @@ func CloseDB() error {
 		return fmt.Errorf("could not disconnect database: %v", err)
 	}
 
-	fmt.Println("Connection to MongoDB closed.")
+	log.Println("Connection to MongoDB closed.")
 	return nil
 }

@@ -16,7 +16,10 @@ type server struct{}
 
 func main() {
 
-	models.StartMongoDB()
+	err := models.StartMongoDB()
+	if err != nil {
+		log.Println("could not start database")
+	}
 
 	isEmpty, err := models.IsDatabaseEmpty()
 	if err != nil {
@@ -24,7 +27,10 @@ func main() {
 	}
 
 	if isEmpty {
-		models.SeedDB()
+		err := models.SeedDB()
+		if err != nil {
+			log.Println("could not seed database")
+		}
 		log.Printf("Database empty, will seed...")
 		log.Printf("Seeding complete!")
 	}
@@ -34,11 +40,11 @@ func main() {
 		panic(err)
 	}
 
-	//Create grpc server
+	// Create grpc server
 	srv := grpc.NewServer()
-	//Register server
+	// Register server
 	proto.RegisterAsciiServiceServer(srv, &server{})
-	//Serialize and Deserialize data
+	// Serialize and Deserialize data
 	reflection.Register(srv)
 
 	if e := srv.Serve(listener); e != nil {
@@ -49,6 +55,15 @@ func main() {
 func (s *server) DisplayAscii(_ context.Context, _ *proto.DisplayRequest) (*proto.DisplayResponse, error) {
 
 	log.Printf("Returning random ascii")
+
+	isEmpty, err := models.IsDatabaseEmpty()
+	if err != nil {
+		return nil, status.Error(codes.Internal, "internal server error")
+	}
+
+	if isEmpty {
+		return nil, status.Error(codes.FailedPrecondition, "database empty")
+	}
 
 	result, err := models.GetRandomArt()
 	if err != nil {

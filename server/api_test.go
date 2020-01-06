@@ -33,8 +33,11 @@ func startServer() {
 }
 
 func TestMain(m *testing.M) {
+
 	models.StartTestDB()
+
 	go startServer()
+
 	conn, err := grpc.Dial("localhost:4444", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
@@ -42,13 +45,19 @@ func TestMain(m *testing.M) {
 	client = proto.NewAsciiServiceClient(conn)
 
 	code := m.Run()
-	models.CloseDB()
+
+	err = models.CloseDB()
+	if err != nil {
+		log.Println("could not close database")
+	}
+
 	os.Exit(code)
 }
 
 func TestServer_DisplayAscii(t *testing.T) {
 	_, err := client.DisplayAscii(context.TODO(), &proto.DisplayRequest{})
 	if err != nil {
+		log.Print(err)
 		t.Fail()
 	}
 }
@@ -60,6 +69,7 @@ func TestServer_UploadAscii(t *testing.T) {
 		str := "something"
 		_, err := client.UploadAscii(context.TODO(), &proto.UploadRequest{Filename: name, Content: str})
 		if err != nil {
+			log.Print(err)
 			t.Fail()
 		}
 	})
