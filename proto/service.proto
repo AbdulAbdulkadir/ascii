@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package proto;
+
+message DisplayRequest {
+}
+
+message DisplayResponse {
+    // displayAscii is the response from the server returning the ascii art
+    string displayAscii = 1;
+}
+
+message UploadRequest {
+    // filename is the filename of the asciiArt
+    string filename = 1;
+    // content is the content of the asciiArt
+    string content = 2;
+}
+
+message UploadResponse {
+}
+
+service AsciiService {
+    // Displays a random ascii art retrieved from a database
+    rpc DisplayAscii(DisplayRequest) returns (DisplayResponse);
+    // Uploads a clients ascii art to the database
+    rpc UploadAscii(UploadRequest) returns (UploadResponse);
+}
