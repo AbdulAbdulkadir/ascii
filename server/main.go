@@ -33,7 +33,7 @@ func main() {
 	}
 
 	if isEmpty {
-		log.Printf("Database empty, will seed...")
+		log.Printf("database empty, will seed...")
 		err := models.SeedDB()
 		if err != nil {
 			log.Println("could not seed database", err)
