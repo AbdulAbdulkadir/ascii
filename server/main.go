@@ -28,7 +28,7 @@ func main() {
 
 	isEmpty, err := models.IsDatabaseEmpty()
 	if err != nil {
-		log.Printf("Error checking if databse is empty")
+		log.Printf("error checking if databse is empty")
 		return
 	}
 
