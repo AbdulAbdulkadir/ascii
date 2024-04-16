@@ -9,7 +9,10 @@ func TestMain(m *testing.M) {
 	StartTestDB()
 	ClearDB()
 	code := m.Run()
-	CloseDB()
+	err := CloseDB()
+	if err != nil {
+		return
+	}
 	os.Exit(code)
 }
 

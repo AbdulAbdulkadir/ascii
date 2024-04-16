@@ -4,17 +4,17 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"log"
+	"os"
+	"time"
+
 	"github.com/AbdulAbdulkadir/ascii/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"io/ioutil"
-	"log"
-	"time"
 )
 
 func main() {
-
 	var url string
 	var fileName string
 
@@ -25,6 +25,7 @@ func main() {
 	conn, err := grpc.Dial(url, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
+		return
 	}
 
 	client := proto.NewAsciiServiceClient(conn)
@@ -34,10 +35,10 @@ func main() {
 
 	// Upload file
 	if fileName != "" {
-
-		content, err := ioutil.ReadFile(fileName)
+		content, err := os.ReadFile(fileName)
 		if err != nil {
 			log.Printf("could not read file")
+			return
 		}
 
 		_, err = client.UploadAscii(ctx, &proto.UploadRequest{Filename: fileName, Content: string(content)})

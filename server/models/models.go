@@ -4,11 +4,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
+	"os"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"io/ioutil"
-	"log"
 )
 
 var (
@@ -23,7 +24,7 @@ type AsciiArt struct {
 
 var mongoClient *mongo.Client
 
-// Starts up test database
+// StartTestDB Starts up test database
 func StartTestDB() {
 	DB = "test"
 	Collection = "test"
@@ -33,12 +34,15 @@ func StartTestDB() {
 	}
 }
 
-// Clears database
+// ClearDB Clears database
 func ClearDB() {
-	mongoClient.Database(DB).Collection(Collection).Drop(context.TODO())
+	err := mongoClient.Database(DB).Collection(Collection).Drop(context.TODO())
+	if err != nil {
+		return
+	}
 }
 
-// Starts up the database
+// StartMongoDB Starts up the database
 func StartMongoDB() error {
 
 	// Set client options
@@ -63,7 +67,7 @@ func StartMongoDB() error {
 	return nil
 }
 
-// Seeds the database with ascii art
+// SeedDB Seeds the database with ascii art
 func SeedDB() error {
 
 	ClearDB()
@@ -81,7 +85,7 @@ func SeedDB() error {
 	return nil
 }
 
-// Takes in an array of ascii art as a parameter and
+// InsertAsciiArtDB Takes in an array of ascii art as a parameter and
 // inserts them into the database
 func InsertAsciiArtDB(artArray []*AsciiArt) error {
 
@@ -90,7 +94,6 @@ func InsertAsciiArtDB(artArray []*AsciiArt) error {
 	}
 
 	for _, v := range artArray {
-
 		_, err := mongoClient.Database(DB).Collection(Collection).InsertOne(context.TODO(), v)
 		if err != nil {
 			return err
@@ -99,7 +102,7 @@ func InsertAsciiArtDB(artArray []*AsciiArt) error {
 	return nil
 }
 
-// Selects random ascii art and returns it
+// GetRandomArt Selects random ascii art and returns it
 func GetRandomArt() (*AsciiArt, error) {
 	var temp *AsciiArt
 	// Selects random ascii art from database
@@ -121,10 +124,10 @@ func GetRandomArt() (*AsciiArt, error) {
 	return temp, nil
 }
 
-// Retrieves ascii art from file, stores them in a string array and returns it
+// GetAsciiArtFromFile Retrieves ascii art from file, stores them in a string array and returns it
 func GetAsciiArtFromFile() ([]*AsciiArt, error) {
 	// Enters the AsciiArt directory
-	files, err := ioutil.ReadDir("AsciiArt")
+	files, err := os.ReadDir("server/AsciiArt")
 	if err != nil {
 		return nil, fmt.Errorf("could not enter directory: %v", err)
 	}
@@ -134,7 +137,7 @@ func GetAsciiArtFromFile() ([]*AsciiArt, error) {
 	// Iterates through the array of text files and retrieves the data while
 	// storing them into a new array of strings
 	for _, file := range files {
-		content, err := ioutil.ReadFile("AsciiArt/" + file.Name())
+		content, err := os.ReadFile("server/AsciiArt/" + file.Name())
 		if err != nil {
 			return nil, fmt.Errorf("could not take assciiArt from text file: %v", err)
 		}
@@ -150,7 +153,7 @@ func GetAsciiArtFromFile() ([]*AsciiArt, error) {
 	return artArray, nil
 }
 
-// Uploads ascii art to the database
+// UploadAsciiArt Uploads ascii art to the database
 func UploadAsciiArt(fileName string, content string) error {
 
 	temp := AsciiArt{
@@ -166,7 +169,7 @@ func UploadAsciiArt(fileName string, content string) error {
 	return nil
 }
 
-// Checks to see if the Database is empty
+// IsDatabaseEmpty Checks to see if the Database is empty
 func IsDatabaseEmpty() (bool, error) {
 
 	count, err := mongoClient.Database(DB).Collection(Collection).CountDocuments(context.TODO(), bson.M{}, nil)
@@ -181,7 +184,7 @@ func IsDatabaseEmpty() (bool, error) {
 	return false, nil
 }
 
-// Closes the connection to the database
+// CloseDB Closes the connection to the database
 func CloseDB() error {
 
 	err := mongoClient.Disconnect(context.TODO())
